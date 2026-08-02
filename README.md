@@ -1,3 +1,41 @@
+# FTC Hardware Lab
+
+This is the Android Studio hardware project for Level 2 of the
+[FTC Coding Assistant](https://github.com/sroorda/ftc-coding-assistant). Students
+use a personal branch for their cumulative work and a short-lived feature branch
+for each lesson.
+
+## Required versions
+
+- FTC SDK: **11.2.1**
+- Android Studio: **Narwhal 3 Feature Drop or later**
+
+Do not accept an Android Studio prompt to downgrade the Android Gradle Plugin,
+Gradle, or project SDK versions. This repository is kept at versions that are
+known to work together.
+
+## Start here
+
+Student code belongs under:
+
+```text
+TeamCode/src/main/java/org/firstinspires/ftc/teamcode/level2
+```
+
+Read [Hardware Lab Contract](docs/HARDWARE_LAB.md) before creating an OpMode. The
+curriculum provides the lesson sequence, setup instructions, safety checks, and
+Git workflow. This repository contains the FTC SDK project that students build,
+deploy, and change.
+
+This repository is a fork of
+[FIRST-Tech-Challenge/FtcRobotController](https://github.com/FIRST-Tech-Challenge/FtcRobotController).
+Changes to `FtcRobotController` and the SDK build files should come from the
+official upstream project, not from student exercises.
+
+---
+
+## Upstream FTC SDK documentation
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the DECODE (2025-2026) competition season.
