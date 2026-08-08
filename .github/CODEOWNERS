@@ -1,0 +1,4 @@
+* @sroorda
+
+# explicitly protect the ownership file too
+/.github/CODEOWNERS @sroorda
