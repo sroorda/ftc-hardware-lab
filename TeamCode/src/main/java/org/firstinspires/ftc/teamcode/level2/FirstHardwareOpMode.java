@@ -14,7 +14,7 @@ public class FirstHardwareOpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
         // Area 1: Get hardware from the robot configuration.
-        DcMotor benchMotor = hardwareMap.get(DcMotor.class, "bench_motor");
+        benchMotor = hardwareMap.get(DcMotor.class, "bench_motor");
         benchMotor.setPower(0.0);
         benchMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
