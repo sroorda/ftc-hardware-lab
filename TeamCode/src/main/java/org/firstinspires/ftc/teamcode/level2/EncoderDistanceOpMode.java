@@ -3,56 +3,60 @@ package org.firstinspires.ftc.teamcode.level2;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "L2 Encoder Distance", group = "Level 2")
 public class EncoderDistanceOpMode extends LinearOpMode {
-    private static final double COUNTS_PER_MOTOR_REV = 537.7;
-    private static final double TEST_POWER = 0.25;
-    private static final double TIMEOUT_SECONDS = 5.0;
-
-    private final ElapsedTime runtime = new ElapsedTime();
     private DcMotor benchMotor;
+    private static final double TICKS_PER_MOTOR_REV = 537.7;
+    private static final double TEST_POWER = 0.25;
+
+    private static final double DRIVE_GEAR_REDUCTION = 1.0;
+    private static final double WHEEL_DIAMETER_INCHES = 4.0;
+    private static final double MOVE_DISTANCE_INCHES = 6.0;
+
+    private static final double TICKS_PER_WHEEL_REV = TICKS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION;
+    private static final double INCHES_PER_WHEEL_REV = WHEEL_DIAMETER_INCHES * Math.PI;
+    private static final double TICKS_PER_INCH = TICKS_PER_WHEEL_REV / INCHES_PER_WHEEL_REV;
 
     @Override
     public void runOpMode() {
-        // Initialization: this runs after INIT and before PLAY.
+        // Area 1: Map and configure the motor.
         benchMotor = hardwareMap.get(DcMotor.class, "bench_motor");
         benchMotor.setPower(0.0);
         benchMotor.setDirection(DcMotor.Direction.FORWARD);
         benchMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         benchMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         benchMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        double numberOfRevolutions = 1.0;
-        int targetTicks = (int) Math.round(numberOfRevolutions * COUNTS_PER_MOTOR_REV);
-        telemetry.addData("Requested revolutions", "%.1f", numberOfRevolutions);
+        int targetTicks = (int) Math.round(MOVE_DISTANCE_INCHES * TICKS_PER_INCH);
+
+        telemetry.addData("Requested distance", "%.2f in", MOVE_DISTANCE_INCHES);
+        telemetry.addData("Inches in 1 revolution", "%.2f", INCHES_PER_WHEEL_REV);
+        telemetry.addData("Ticks per inch", "%.2f", TICKS_PER_INCH);
         telemetry.addData("Target ticks", targetTicks);
         telemetry.addData("Current ticks", benchMotor.getCurrentPosition());
         telemetry.update();
 
-        // Pause here until the driver presses PLAY.
+        // Wait for PLAY.
         waitForStart();
 
+        // Area 2: Command one encoder movement.
         if (opModeIsActive()) {
-            if (opModeIsActive()) {
-                benchMotor.setTargetPosition(targetTicks);
-                benchMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                benchMotor.setPower(TEST_POWER);
+            benchMotor.setTargetPosition(targetTicks);
+            benchMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            benchMotor.setPower(TEST_POWER);
 
-                while (opModeIsActive() && benchMotor.isBusy()) {
-                    telemetry.addData("Target ticks", targetTicks);
-                    telemetry.addData("Current ticks", benchMotor.getCurrentPosition());
-                    telemetry.update();
-                    idle();
-                }
+            while (opModeIsActive() && benchMotor.isBusy()) {
+                telemetry.addData("Target ticks", targetTicks);
+                telemetry.addData("Current ticks", benchMotor.getCurrentPosition());
+                telemetry.update();
+                idle();
             }
-
-            benchMotor.setPower(0.0);
-            benchMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
-        // Leave the motor stopped when the OpMode finishes.
+        // Area 3: Leave the motor stopped.
         benchMotor.setPower(0.0);
+        benchMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
