@@ -27,7 +27,7 @@ public class FirstHardwareOpMode extends LinearOpMode {
 
         while (opModeIsActive()) {
             double rawStickY = gamepad1.left_stick_y;
-            double requestedPower = -rawStickY * 0.25;
+            double requestedPower = -rawStickY;
             benchMotor.setPower(requestedPower);
 
             telemetry.addData("Status", "Running");
