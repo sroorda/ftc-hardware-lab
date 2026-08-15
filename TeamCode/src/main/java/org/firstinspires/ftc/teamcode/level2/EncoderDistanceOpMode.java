@@ -7,8 +7,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp(name = "L2 Encoder Distance", group = "Level 2")
 public class EncoderDistanceOpMode extends LinearOpMode {
     private DcMotor benchMotor;
-    private static final double TICKS_PER_MOTOR_REV = 0.0;
+    private static final double TICKS_PER_MOTOR_REV =  537.7;
     private static final double TEST_POWER = 0.25;
+    private static final double DRIVE_GEAR_REDUCTION = 1.0;
+    private static final double WHEEL_DIAMETER_INCHES = 1.996;
+    private static final double MOVE_DISTANCE_INCHES = 6.0;
+
+    private static final double TICKS_PER_WHEEL_REV = TICKS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION;
+    private static final double INCHES_PER_WHEEL_REV = WHEEL_DIAMETER_INCHES * Math.PI;
+    private static final double TICKS_PER_INCH = TICKS_PER_WHEEL_REV / INCHES_PER_WHEEL_REV;
 
     @Override
     public void runOpMode() {
@@ -21,10 +28,11 @@ public class EncoderDistanceOpMode extends LinearOpMode {
         benchMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         benchMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        int targetTicks = (int) Math.round(TICKS_PER_MOTOR_REV);
+        int targetTicks = (int) Math.round(MOVE_DISTANCE_INCHES * TICKS_PER_INCH);
 
-        telemetry.addData("Status", "Encoder reset");
-        telemetry.addData("Movement", "One revolution");
+        telemetry.addData("Requested distance", "%.2f in", MOVE_DISTANCE_INCHES);
+        telemetry.addData("Inches in 1 revolution", "%.2f", INCHES_PER_WHEEL_REV);
+        telemetry.addData("Ticks per inch", "%.2f", TICKS_PER_INCH);
         telemetry.addData("Target ticks", targetTicks);
         telemetry.addData("Current ticks", benchMotor.getCurrentPosition());
         telemetry.update();
