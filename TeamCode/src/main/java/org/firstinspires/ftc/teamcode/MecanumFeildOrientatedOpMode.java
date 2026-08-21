@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.level2;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "L2 First Hardware", group = "Level 2")
 public class MecanumFeildOrientatedOpMode extends OpMode {
     MecanumDrive drive = new MecanumDrive();
-    double forward, strafe, rotate;
 
     public void init(){
         drive.init(hardwareMap);
