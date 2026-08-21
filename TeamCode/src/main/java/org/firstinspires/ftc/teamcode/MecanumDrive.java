@@ -66,7 +66,7 @@ public class MecanumDrive {
         backRightMotor.setPower(maxSpeed * (backRightPower/ maxPower));
     }
 
-    public void driveFeildRelitive(double forward, double strafe, double rotate){
+    public void driveFieldRelative(double forward, double strafe, double rotate){
         double theta = Math.atan2(forward, strafe);
         double r = Math.hypot(strafe, forward);
 

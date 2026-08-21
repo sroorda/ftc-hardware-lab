@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "L2 First Hardware", group = "Level 2")
-public class MecanumFeildOrientatedOpMode extends OpMode {
+public class MecanumFieldOrientedOpMode extends OpMode {
     MecanumDrive drive = new MecanumDrive();
 
     public void init(){
@@ -37,6 +37,6 @@ public class MecanumFeildOrientatedOpMode extends OpMode {
                 autoToggledOn = false;
             }
         }
-        drive.driveFeildRelitive(leftStickY, leftStickX, rightStickX);
+        drive.driveFieldRelative(leftStickY, leftStickX, rightStickX);
     }
 }
